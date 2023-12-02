@@ -15,12 +15,12 @@
         <div class="postDetailsContainer">
             <span>{{user.username}}</span>
             <div class="formContainer">
-                <form id="contentUploadForm" action="/createPost/" method="post" enctype="multipart/form-data">
+                <form id="contentUploadForm" action="/createPost/" method="post" autocomplete="off" enctype="multipart/form-data">
 
                     {% csrf_token %}
             
                     <input type="text" name="content" id="contentInput" placeholder="What's in your mind?...">
-                    <input type="file" name="contentImage">
+                    <input type="file" name="contentImage" accept="image/*">
                     <button id="postButton" type="submit">Post</button>
                 </form>
             </div>
