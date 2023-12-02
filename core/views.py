@@ -203,7 +203,8 @@ def Editprofile(request):
         old_profile_picture = profile.profile_picture
         if old_profile_picture:
                 file_path = old_profile_picture.path
-                os.remove(file_path)            
+                if file_path:
+                    os.remove(file_path)            
 
         profile_picture = request.FILES.get('profile_picture')
         bio = request.POST.get('bio')
