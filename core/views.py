@@ -87,10 +87,10 @@ def index(request):
     followed_users = FollowersManager.objects.filter(follower=profile).values_list('followed', flat=True)
 
     # Fetch posts from the followed users
-    followed_posts = ThreadsContent.objects.filter(user__in=followed_users)[:5]
+    followed_posts = ThreadsContent.objects.filter(user__in=followed_users)[:2]
 
     # Fetch a random set of 10 posts from the database
-    random_posts = ThreadsContent.objects.exclude(user__in=followed_users).order_by('?')[:10]
+    random_posts = ThreadsContent.objects.exclude(user__in=followed_users).order_by('?')[:13]
 
     # Combine followed posts with random posts
     posts = list(followed_posts) + list(random_posts)
