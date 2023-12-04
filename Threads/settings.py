@@ -10,30 +10,35 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# cloudinary imports
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 
-#                                                                                            DEPLOYMENT
-SECRET_KEY = os.environ.get("SECRET_KEY")
-#                                                                                            DEPLOYMENT
+# #                                                                                            DEPLOYMENT
+# SECRET_KEY = os.environ.get("SECRET_KEY")
+# #                                                                                            DEPLOYMENT
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-_b7u_4!nge9)qc)z*sxt+pi&kyt&-pvw-0r)+!jfkuco3kvdv)'
+SECRET_KEY = 'django-insecure-_b7u_4!nge9)qc)z*sxt+pi&kyt&-pvw-0r)+!jfkuco3kvdv)'
 
-#                                                                                            DEPLOYMENT  
-DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
-#                                                                                            DEPLOYMENT                           
+# #                                                                                            DEPLOYMENT  
+# DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+# #                                                                                            DEPLOYMENT                           
 
 # # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = True
 
-#                                                                                            DEPLOYMENT
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
-#                                                                                            DEPLOYMENT 
+# #                                                                                            DEPLOYMENT
+# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+# #                                                                                            DEPLOYMENT 
 
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -46,6 +51,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -91,15 +98,15 @@ DATABASES = {
     }
 }
 
-#                                                                                                                        DEPLOYMENT SECTION                                        #
-database_url = os.environ.get("DATABASE_URL")
-DATABASES["default"] = dj_database_url.parse(database_url)
+# #                                                                                                                        DEPLOYMENT SECTION                                        #
+# database_url = os.environ.get("DATABASE_URL")
+# DATABASES["default"] = dj_database_url.parse(database_url)
 
-#postgres://o2_db_uj5m_user:ZMqyYevTf3plh1R6DFhhEtIaHB5WLvPG@dpg-cll0susjtl8s73f51hcg-a.oregon-postgres.render.com/o2_db_uj5m
+# #postgres://o2_db_uj5m_user:ZMqyYevTf3plh1R6DFhhEtIaHB5WLvPG@dpg-cll0susjtl8s73f51hcg-a.oregon-postgres.render.com/o2_db_uj5m
 
-#                                                                                                                         DEPLOYMENT SECTION                                        #
+# #                                                                                                                         DEPLOYMENT SECTION                                        #
 
-# DATABASES["default"] = dj_database_url.parse('postgres://o2_db_uj5m_user:ZMqyYevTf3plh1R6DFhhEtIaHB5WLvPG@dpg-cll0susjtl8s73f51hcg-a.oregon-postgres.render.com/o2_db_uj5m')
+DATABASES["default"] = dj_database_url.parse('postgres://o2_db_uj5m_user:ZMqyYevTf3plh1R6DFhhEtIaHB5WLvPG@dpg-cll0susjtl8s73f51hcg-a.oregon-postgres.render.com/o2_db_uj5m')
 
 
 # Password validation
@@ -153,3 +160,15 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+# cloudinary - Django intergration
+
+cloudinary.config(
+
+    cloud_name = "dgj2userf",
+    api_key = "143335375468237",
+    api_secret = "c72rfFRAHwqSOnClEWtkgBk7eLg",
+
+)

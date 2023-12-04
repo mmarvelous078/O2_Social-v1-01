@@ -5,10 +5,13 @@ import os
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 
+from cloudinary.models import CloudinaryField
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
-    profile_picture = models.ImageField(upload_to='profile_pictures/', default='default/default_image.png')
+    profile_picture = CloudinaryField('image')
+    # profile_picture = models.ImageField(upload_to='profile_pictures/', default='default/default_image.png')
     location = models.CharField(max_length=100, blank=True)
     verified = models.BooleanField(default=False)
 
@@ -19,7 +22,8 @@ class ThreadsContent(models.Model):
     content = models.TextField(blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    content_img = models.ImageField(upload_to='content_images/',  blank=True, null=True)
+    content_img = CloudinaryField('image')
+    # content_img = models.ImageField(upload_to='content_images/',  blank=True, null=True)
     content_video = models.FileField(upload_to='content_videos/', blank=True, null=True)
     no_of_likes = models.IntegerField(default=0)
     no_of_comments = models.IntegerField(default=0)
@@ -27,15 +31,13 @@ class ThreadsContent(models.Model):
     def __str__(self):
         return self.content[:20]
 
-@receiver(pre_delete, sender=ThreadsContent)
-def delete_post_image(sender, instance, **kwargs):
-    #Delete the image file when the associated Post instance is deleted    
-    if instance.content_img:
-        image_path = os.path.join('images/', str(instance.content_img))
-        if os.path.isfile(image_path):
-            os.remove(image_path)
-
-
+# @receiver(pre_delete, sender=ThreadsContent)
+# def delete_post_image(sender, instance, **kwargs):
+#     #Delete the image file when the associated Post instance is deleted    
+#     if instance.content_img:
+#         image_path = os.path.join('images/', str(instance.content_img))
+#         if os.path.isfile(image_path):
+#             os.remove(image_path)
 
 
 
