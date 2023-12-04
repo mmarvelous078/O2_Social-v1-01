@@ -13,6 +13,8 @@ from .forms import CreateUserForm, ThreadsContentForm, ProfileForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 
+import cloudinary.uploader
+
 import random
 import os
 
@@ -182,12 +184,22 @@ def createPost(request):
 @login_required(login_url='core:login')
 def delete_post(request, post_id):
     post = ThreadsContent.objects.get(id=post_id)
+    if post:
+        # getting image ID
+        public_id = post.content_img.public_id
 
-    if request.method == 'POST':
-        post.delete()
-        return JsonResponse({'message':'Post deleted successfully'})
+        # Delete the image from cloudinary
+        result = cloudinary.uploader.destroy(public_id)
+        if request.method == 'POST':
+            # CHECK IF THE DELETION WAS SUCCESSFUL
+            if result.get("result") == "ok":
+                #Delete the post from the database
+                post.delete()
+                return JsonResponse({'message':'Post deleted successfully'})
+            else:
+                return JsonResponse({"message":'Failed to delete image'})
 
-    return JsonResponse({'message':'An error'})
+    return JsonResponse({'message':'An error occured'})
 
 # PROFILE USER -------------------------------------------------------------------------------PROFILE USER-----------------------------------------
 @login_required(login_url='core:login')
@@ -196,19 +208,16 @@ def Editprofile(request):
 
     # Retrieve the user's profile data
     profile = get_object_or_404(Profile, user=user)
+    public_id = profile.profile_picture.public_id
 
     if request.method == "POST":
-        # Handle form submission
-
-        old_profile_picture = profile.profile_picture
-        if old_profile_picture:
-                file_path = old_profile_picture.path
-                if file_path:
-                    os.remove(file_path)            
-
+        # Handle form submission           
         profile_picture = request.FILES.get('profile_picture')
         bio = request.POST.get('bio')
         location = request.POST.get('location')
+
+        # Delete the previous profile pic from cloudinary
+        result = cloudinary.uploader.destroy(public_id)
 
         # Update the existing profile data
         profile.user = user

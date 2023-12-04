@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900;1000&display=swap');
 
 
 body{
@@ -10,7 +10,7 @@ body{
     height: 100vh;
     align-items: center;
     color: rgb(0, 0, 0);
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Nunito', sans-serif;
 }
 
 .logo-container{
@@ -350,7 +350,7 @@ nav .navbar a img {
 }
 
 .app .underBiobuttons button{
-    width: 150px;
+    width: 300px;
     height: 25px;
     border: none;
     border-radius: 12px;
