@@ -14,6 +14,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 
 import cloudinary.uploader
+from django.db.models import Q
 
 import random
 import os
@@ -502,3 +503,28 @@ def likeReply(request, reply_id):
     likesForThisReplyCount = Likes_for_Replies.objects.filter(likeFor=beingLiked).count()
     userlikedThis = Likes_for_Replies.objects.filter(user=profile,likeFor=beingLiked).exists()
     return JsonResponse({'likesForThisReplyCount': likesForThisReplyCount, 'userlikedThis':userlikedThis})
+
+
+# ----------------------- Random users ---------------------------------- Suggestion box
+@login_required(login_url='core:login')
+def get_random_users(request):
+    # Get the current user's profile
+    user = request.user
+    profile = Profile.objects.get(user=user)
+
+    # Get users followed by the current user
+    user_followed = FollowersManager.objects.filter(follower=profile).values('followed__user')
+
+    # Get 10 users who are not the current user and are not already followed
+    new_users = Profile.objects.exclude(Q(user=request.user) | Q(user__in=user_followed))[:10]
+
+    suggested_users = [
+        {
+            'username': user.user.username,
+            'profid': user.user.id,
+            'profile_picture': user.profile_picture.url
+        }
+        for user in new_users
+    ]
+
+    return JsonResponse({'random_users': suggested_users})

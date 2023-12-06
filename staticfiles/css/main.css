@@ -119,10 +119,8 @@ body{
 }
 
 .post-image-container {
-    max-width: 250px;
     border-radius: 8px;
     margin: 10px 0;
-    border: 1px solid rgba(222, 200, 197, 0.412);
     padding: 3px;
 }
 .post-image {
@@ -150,7 +148,7 @@ body{
     margin-left: 10px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -163,12 +161,16 @@ body{
     background-color: rgba(192, 192, 192, 0.583);
 }
 
-nav .navbar{
-    position: absolute;
-    display: flex;
-    height: 50px;
-    width: 100%;
+.app nav {
+    position: sticky;
     bottom: 0;
+    width: 100%;
+}
+
+nav .navbar{
+    display: flex;
+    height: 55px;
+    width: 100%;
     justify-content: space-around;
     align-items: center;
     background-color: #dde2d0;
@@ -391,7 +393,7 @@ nav .navbar a img {
 
 
 .app #ProfilePostsWindow {
-    height: 87%;
+    height: 90%;
     overflow-y: scroll;
 }
 .app #ProfilePostsWindow::-webkit-scrollbar{
@@ -563,6 +565,18 @@ nav .navbar a img {
 
 .app #postNav span{
     font-weight: 600;
+}
+
+.app #postPreview{
+    width: 100%;
+    height: 69%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.app #postPreview img{
+    width: 100%;
+    object-fit: contain;
 }
 
 .postingContainer {

@@ -1,29 +1,3 @@
-document.getElementById('imageUploadIcon').addEventListener('click',()=>{
-    document.getElementById('imageSelectorInput').click()
-})
-
-// image preview
-function previewPost(event) {
-    const input = event.target;
-    const preview = document.getElementById('postPreview');
-    const imgElement = preview.querySelector('img');
-    
-    const file = input.files[0];
-
-    if (file) {
-        const reader = new FileReader();
-
-        reader.onload = function(e) {
-            imgElement.src = e.target.result;
-        };
-
-        reader.readAsDataURL(file);
-        
-    } else {
-        imgElement.src = ''; // Clear the preview if no file is selected
-    }
-}
-
 document.getElementById('contentUploadForm').addEventListener('submit', (event)=>{
     event.preventDefault()
 
@@ -34,7 +8,7 @@ document.getElementById('contentUploadForm').addEventListener('submit', (event)=
     let contentText = document.querySelector('input[name="content"]').value;
     let contentImage = document.querySelector('input[name="contentImage"]').files[0];
 
-    if(!contentImage) {
+    if(contentText.trim() === '' && !contentImage) {
         alert('Please provide a title and select an Image.');
         postButton.disabled = false;
         return;

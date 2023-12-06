@@ -6,6 +6,9 @@ app_name = 'core'
 urlpatterns = [
     path('', views.index , name='index'),
 
+    # -------------------------- follow users recommandations --------------------
+    path('get_random_users/', views.get_random_users, name="get_random_users"),
+
     # ************************************************************************Authentication
     path('register/', views.registerPage , name='register'),
     path('login/', views.loginPage , name='login'),
@@ -20,6 +23,8 @@ urlpatterns = [
 
     path('viewfollowing/massfollow/<int:prof_id>', views.massfollow, name='massfollowing'),
     path('viewfollowers/massfollow/<int:prof_id>', views.massfollow, name='massfollower'),
+
+    path('massfollow/<int:prof_id>', views.massfollow, name='massfollower'),
 
     path('viewfollowing/<int:user_id>', views.following_view_page ,name='viewfollowing'),
     path('viewfollowers/<int:user_id>', views.followers_view_page ,name='viewfollowers'),

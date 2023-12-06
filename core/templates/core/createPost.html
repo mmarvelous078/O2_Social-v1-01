@@ -20,11 +20,19 @@
                     {% csrf_token %}
             
                     <input type="text" name="content" id="contentInput" placeholder="What's in your mind?...">
-                    <input type="file" name="contentImage" accept="image/*">
+                    <i id="imageUploadIcon" class="fa-solid fa-image fa-lg"></i>
+                    <br>
+                    <input id="imageSelectorInput" type="file" name="contentImage" onchange="previewPost(event)" style="display: none;" accept="image/*">
                     <button id="postButton" type="submit">Post</button>
                 </form>
             </div>
         </div>
+    </div>
+    <div style="display: flex;align-items: center;justify-content: center;">
+        <h3>Selected Image Preview</h3>
+    </div>
+    <div id="postPreview">
+        <img src="#" alt="">
     </div>
     
     {% include "core/Nav.html" %}

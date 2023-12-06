@@ -1,0 +1,153 @@
+<div id="RecommenderCont">
+    <span id="recommenderToggleOpen">&dArr;</span>
+    <div id="profileRec">
+        <div class="loadercont displayLoaderClose">
+            <div id="loader"></div>
+        </div>
+    </div>    
+</div>
+
+<script>
+    const RecommenderCont = document.getElementById('RecommenderCont');
+    let profileRec = document.getElementById('profileRec');
+
+    let RecommenderOpen = false;
+    let toggleOpenButton = document.querySelector('#recommenderToggleOpen');
+
+
+    const followFunction = (userIdent)=> {
+        console.log('follow', userIdent)
+
+        let newfollowxhr = new XMLHttpRequest();
+        newfollowxhr.open('GET', `massfollow/${userIdent}`,true)
+        newfollowxhr.onreadystatechange = () => {
+            if (newfollowxhr.readyState === XMLHttpRequest.DONE){
+                if(newfollowxhr.status === 200){
+                    let followdata = JSON.parse(newfollowxhr.responseText);
+                    console.log(followdata);
+
+                    let btn = document.getElementById(`sugfollowbtns${userIdent}`);
+
+                    if(followdata.is_Following){
+                        btn.innerHTML = 'Following'
+                        btn.style.color = 'rgb(50, 50, 50)';
+                        btn.style.backgroundColor = 'rgb(214, 219, 223)';
+                    } else {
+                        btn.innerHTML = 'Follow';
+                        btn.style.color = 'rgb(236, 236, 236)';
+                        btn.style.backgroundColor = 'rgb(54, 176, 228)';                            
+                    }
+
+                } else {
+                    console.error('ERROR:', newfollowxhr.statusText, newfollowxhr.status)
+                }
+            };
+        };
+        newfollowxhr.send();
+    };
+
+    document.getElementById('recommenderToggleOpen').addEventListener('click', () => {
+        RecommenderOpen = !RecommenderOpen; // Toggle the state
+
+        if (RecommenderOpen) {
+            // Code for opening the RecommenderCont
+            RecommenderCont.style.height = "150px";
+            profileRec.style.display = "flex";
+            profileRec.style.height = "149px";
+
+            // Show loader
+            let loadercont = document.querySelector('.loadercont');
+            loadercont.classList.toggle('displayLoader');
+            loadercont.classList.toggle('displayLoaderClose');
+
+            toggleOpenButton.classList.toggle('toggle-btn');
+            
+            // getting user recommmended from backend
+            let recommenderXHR = new XMLHttpRequest();
+            recommenderXHR.open('GET', '/get_random_users/', true);
+            recommenderXHR.onreadystatechange = () => {
+                if (recommenderXHR.readyState === XMLHttpRequest.DONE) {
+                    if (recommenderXHR.status === 200) {
+
+                        // Hide loader
+                        loadercont.classList.toggle('displayLoader');
+                        loadercont.classList.toggle('displayLoaderClose');
+
+                        let data = JSON.parse(recommenderXHR.responseText);
+
+                        console.log(data)
+                        data = data.random_users
+
+                        // iteratig over recommended user
+                        data.forEach(user => {
+                            console.log(user);
+                            let IndUserCont = document.createElement('div');
+                            IndUserCont.className = 'IndUserCont';
+
+                            let IndUserImage = document.createElement('img');
+                            IndUserImage.src = user.profile_picture;
+                            IndUserImage.style.height = "40px";
+                            IndUserImage.style.width = "40px";
+                            IndUserImage.style.borderRadius = "50%";
+
+                            let IndUsername = document.createElement('span')
+                            IndUsername.style.color = "white";
+                            IndUsername.style.fontSize = "14px";
+                            IndUsername.style.padding = "10px 0";
+                            IndUsername.innerText = user.username;
+
+                            let followbtn = document.createElement('span')
+                            followbtn.innerHTML = 'Follow';
+                            followbtn.style.color = 'rgb(236, 236, 236)';
+                            followbtn.style.backgroundColor = 'rgb(54, 176, 228)';
+                            followbtn.style.padding = '6px 15px';
+                            followbtn.style.borderRadius = '10px';
+                            followbtn.style.fontSize = '14px';
+                            followbtn.style.fontWeight = '500';
+                            followbtn.style.cursor = 'pointer';
+                            followbtn.style.transition = '0.3s';
+                            followbtn.id = `sugfollowbtns${user.profid}`;
+
+
+                            followbtn.onclick = function() {
+                                followFunction(user.profid);
+                            };
+
+
+                            let profileRec =  document.getElementById('profileRec');
+                            IndUserCont.appendChild(IndUserImage);
+                            IndUserCont.appendChild(IndUsername);
+                            IndUserCont.appendChild(followbtn);
+                            
+                            profileRec.appendChild(IndUserCont);
+                        });
+                    } else {
+                        console.error('Error:', recommenderXHR.statusText, recommenderXHR.status);
+                    };
+                };
+            };
+            recommenderXHR.send();
+        } else {
+            // Code for closing the RecommenderCont
+            RecommenderCont.style.height = "0";
+            profileRec.style.display = "none"
+            profileRec.style.height = "0"
+            toggleOpenButton.classList.toggle('toggle-btn');
+            setTimeout(() => {
+                let profileRec = document.getElementById('profileRec')
+                profileRec.innerHTML = '';
+
+                let loaderBack = document.createElement('div');
+                loaderBack.classList.add('loadercont');
+                loaderBack.classList.add('displayLoaderClose');
+
+                let intLoader = document.createElement('div')
+                intLoader.id = 'loader'
+                loaderBack.appendChild(intLoader)
+                
+                profileRec.appendChild(loaderBack);
+            }, 500);
+        }
+    });
+
+</script>

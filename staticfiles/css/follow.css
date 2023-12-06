@@ -242,3 +242,98 @@
     border-radius: 8px;
     cursor: pointer;
 }
+
+
+.app #RecommenderCont {
+    width: 100%;
+    height: 0;
+    border-top: 1px solid #6d6d6d; 
+    border-bottom: 1px solid #6d6d6d;
+    position: relative;
+    background: linear-gradient(to bottom, #a8afbd, #a7bee3);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    transition: 0.45s ease;
+}
+
+.app #RecommenderCont #recommenderToggleOpen{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    border: 1px solid rgb(90, 90, 90);
+    font-weight: bolder;
+
+    transform-origin: center;
+    transition: transform 0.3s ease;
+    position: absolute;
+    bottom: -10px;
+    left: 46%;
+    z-index: 500;
+    cursor: pointer;
+}
+
+.app #RecommenderCont .toggle-btn {
+    transform: rotate(180deg);
+}
+
+.app #RecommenderCont #profileRec{
+    width: 100%;
+    height: 0;
+    display: none;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    overflow-x: hidden;
+
+    transition: 0.3s ease;
+}
+.app #RecommenderCont #profileRec::-webkit-scrollbar{
+    display: none;
+}
+
+.app #RecommenderCont #profileRec .loadercont{
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.app #RecommenderCont #profileRec .displayLoader {
+    display: flex;
+}
+
+.app #RecommenderCont #profileRec .displayLoaderClose {
+    display: none;
+}
+
+.app #RecommenderCont #profileRec .loadercont #loader{
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;   
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.app #RecommenderCont #profileRec .IndUserCont{
+    display: flex;
+    height: 100%;
+    width: 100px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background-color: rgba(99, 99, 99, 0.631);
+    border: 1px solid rgba(209, 213, 219, 0.3);
+    margin: 0 1px;
+}

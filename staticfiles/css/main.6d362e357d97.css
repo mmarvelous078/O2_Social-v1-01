@@ -119,8 +119,10 @@ body{
 }
 
 .post-image-container {
+    max-width: 250px;
     border-radius: 8px;
     margin: 10px 0;
+    border: 1px solid rgba(222, 200, 197, 0.412);
     padding: 3px;
 }
 .post-image {
@@ -148,7 +150,7 @@ body{
     margin-left: 10px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -772,7 +774,7 @@ nav .navbar a img {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url("login.jpg");
+    background-image: url("login.4262455a43b0.jpg");
     background-size: cover;
     background-position: 10% top;
     flex-direction: column;
