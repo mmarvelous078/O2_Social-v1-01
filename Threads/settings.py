@@ -166,9 +166,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # cloudinary - Django intergration
 
 cloudinary.config(
-
-    cloud_name = "dgj2userf",
-    api_key = "143335375468237",
-    api_secret = "c72rfFRAHwqSOnClEWtkgBk7eLg",
-
+# add your own
 )
